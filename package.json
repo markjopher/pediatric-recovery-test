@@ -1,0 +1,6 @@
+{
+  "name": "pediatric-recovery",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node serve.mjs", "test": "node --test" }
+}

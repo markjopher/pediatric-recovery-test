@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10392f">
+<meta name="description" content="An offline-first pediatric recovery tracker prototype.">
+<link rel="manifest" href="./app.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css">
+<title>Little Steps | Recovery tracker</title>
+<script type="module" src="./app.js"></script>
+</head>
+<body>
+<header class="mast"><div class="shell brand"><span class="mark" aria-hidden="true">✚</span><span>Little Steps<small>HOME RECOVERY TRACKER</small></span><span class="private">On-device only</span></div></header>
+<main class="shell">
+<p id="storage-error" role="alert" hidden>Device storage is unavailable. Changes were not saved. Follow your discharge instructions and keep a separate record.</p>
+<section id="setup" class="card setup">
+<p class="eyebrow">48-HOUR MONITOR</p>
+<h1>Start a recovery session</h1>
+<p>Enter the details from your child’s discharge plan. This developer prototype tracks what you record. Follow the care team’s instructions and seek help if your child worsens.</p>
+<form id="profile">
+<label>Child’s name<input name="child" required maxlength="60" autocomplete="off"></label>
+<div class="pair"><label>Weight (kg)<input name="weight" type="number" min="0.1" max="300" step="0.01" required></label>
+<label>Clinician’s hourly ORS goal (mL)<input name="fluid" type="number" min="1" max="10000" step="1" required></label></div>
+<div class="pair"><label>Discharged at<input name="discharge" type="datetime-local" required></label>
+<label>Prescribed daily zinc (mg), if any<input name="zinc" type="number" min="0.1" max="1000" step="0.1"></label></div>
+<p id="profile-error" role="alert" hidden></p>
+<button class="primary" type="submit">Start tracking</button>
+</form>
+</section>
+<section id="dashboard" hidden>
+<div class="hero"><div><p class="eyebrow">RECOVERY SESSION</p><h1 id="child"></h1><p id="status"></p></div><span id="time-left" class="pill"></span></div>
+<div class="grid">
+<section class="card" aria-labelledby="balance-title">
+<p class="eyebrow">ROLLING 4 HOURS</p><h2 id="balance-title">Fluid balance</h2>
+<div class="numbers"><div><strong id="retained"></strong><small>Retained fluid logged</small></div><div><strong id="target"></strong><small>Estimated goal</small></div></div>
+<progress id="progress" max="100" aria-label="Percentage of estimated fluid goal logged"></progress>
+<p id="breakdown" class="muted"></p>
+<p class="muted">The goal is a tracking estimate. Follow the amounts and timing in your discharge plan.</p>
+</section>
+<section class="card" aria-labelledby="check-title">
+<p class="eyebrow">EVERY 2 HOURS</p><h2 id="check-title">Safety checkpoint</h2>
+<p id="check-summary"></p><p id="zinc-summary"></p>
+<button id="open-check" class="secondary active-only" type="button">Record checkpoint</button>
+</section>
+<section class="card" aria-labelledby="activity-title">
+<h2 id="activity-title">Recent activity</h2><ol id="history"></ol>
+</section>
+<section class="card" aria-labelledby="reminder-title">
+<h2 id="reminder-title">Reminders</h2><p id="next-check"></p>
+<p class="muted">Browser reminders can be delayed or missed when this app is closed or your phone is locked.</p>
+<button id="notify" type="button" class="secondary active-only">Enable browser reminders</button>
+<p id="notify-status" role="status"></p>
+</section>
+</div>
+<div class="quick card active-only">
+<h2>Quick log</h2>
+<div class="quick-buttons">
+<button class="secondary" data-intake="50" type="button">+ 50 mL ORS</button>
+<button class="secondary" data-intake="100" type="button">+ 100 mL ORS</button>
+<button class="secondary" id="custom-fluid" type="button">Other fluid</button>
+<button class="secondary" id="stool" type="button">Log stool</button>
+<button class="secondary" id="vomit" type="button">Log vomiting</button>
+</div>
+<p id="logged" role="status"></p>
+</div>
+<div class="danger-row"><button id="danger" class="danger" type="button">Get emergency guidance</button>
+<button id="reset" class="text-button" type="button">Clear session data</button></div>
+</section>
+</main>
+<dialog id="entry"><form id="entry-form"><h2 id="entry-title"></h2><div id="entry-fields"></div><div class="actions"><button id="cancel" class="secondary" type="button">Cancel</button><button class="primary" type="submit">Save</button></div></form></dialog>
+<dialog id="emergency" class="emergency" aria-labelledby="emergency-title">
+<div><p class="eyebrow">IMMEDIATE ACTION</p><h2 id="emergency-title">Seek emergency care now</h2>
+<ul id="reasons"></ul><p>Go to the nearest emergency department now. If your child is unresponsive or difficult to wake, call your local emergency number immediately.</p>
+<p>Bring the discharge instructions and tell the care team when your child last passed urine and what fluids they kept down.</p>
+<button id="acknowledge" type="button">View recovery log</button></div>
+</dialog>
+</body>
+</html>
