@@ -120,6 +120,7 @@ function render() {
     active && nextCheck < start + DURATION ?
       "Next fluid and safety reminder at " + timeLabel(nextCheck) + "." :
       "No further reminders scheduled.";
+  el("notify").hidden = androidHost || !active;
   el("notify-status").textContent = reminderStatus;
   if (referred && lastAlert !== session.sessionId) {
     lastAlert = session.sessionId;
@@ -247,7 +248,13 @@ el("reset").onclick = () => {
   }
 };
 
-if ("serviceWorker" in navigator) {
+const androidHost = location.hostname === "appassets.androidplatform.net";
+if (androidHost) {
+  el("notify").hidden = true;
+  reminderStatus = "Checkpoints appear while the app is open. Background notifications are not enabled.";
+}
+
+if (!androidHost && "serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js")
     .then(() => navigator.serviceWorker.ready)
     .then(worker => { registration = worker; render(); })

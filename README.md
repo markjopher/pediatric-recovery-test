@@ -1,5 +1,9 @@
 # Little Steps
 
+## Android app
+
+An offline Android app is available in [`android/`](android/README.md). Open that folder in Android Studio, sync Gradle, and run on Android 8.0 or newer. It bundles the web tracker directly; no development server is required. Background notifications are not implemented in this version.
+
 Local developer prototype for the 48-hour pediatric recovery handoff. It uses a static, installable PWA and stores one session and its events in browser storage. The service worker caches the app after the first successful load. No account, analytics, or server-side patient data is used.
 
 ## Run
